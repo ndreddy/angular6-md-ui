@@ -1,0 +1,114 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h2>New Usage Plan</h2>
+    <form (ngSubmit)="onSubmit()" #usagePlanForm="ngForm">
+      <div class="form-group">
+        <label for="name">Usage Plan Name</label>
+        <input type="text" class="form-control" id="name"
+               required
+               [(ngModel)]="model.name" name="name"
+               #name="ngModel">
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="description">Description</label>
+        <input type="text" class="form-control" id="description"
+               [(ngModel)]="model.description" name="description">
+      </div>
+
+      <!-- Throttling -->
+      <div class="form-group">
+        <label for="rateLimit">Throttle Rate (request per second)</label>
+        <input type="text" class="form-control" id="rateLimit"
+              required
+               [(ngModel)]="model.throttle.rateLimit" name="rateLimit"
+               #rateLimit="ngModel">
+          <div [hidden]="rateLimit.valid || rateLimit.pristine"
+               class="alert alert-danger">
+            Rate Limit is required
+          </div>      
+      </div>
+      <div class="form-group">
+        <label for="burstLimit">Throttle Burst (requests)</label>
+        <input type="text" class="form-control" id="burstLimit"
+              required
+               [(ngModel)]="model.throttle.burstLimit" name="burstLimit"
+               #burstLimit="ngModel">
+               <div [hidden]="burstLimit.valid || burstLimit.pristine"
+                    class="alert alert-danger">
+                 Burst is required
+               </div>   
+      </div>
+<!-- Quota -->
+    <div class="form-group">
+      <label for="quotaLimit">Quota Limit (requests)</label>
+      <input type="text" class="form-control" id="quotaLimit"
+            required
+            [(ngModel)]="model.quota.limit" name="quotaLimit"
+            #quotaLimit="ngModel">
+               <div [hidden]="quotaLimit.valid || quotaLimit.pristine"
+                    class="alert alert-danger">
+                 Quota Limit is required
+               </div> 
+    </div>
+      <div class="form-group">
+        <label for="quotaPeriod">Quota requests per </label>
+        <select class="form-control" id="quotaPeriod"
+                required
+                [(ngModel)]="model.quota.period" name="quotaPeriod"
+                #quotaPeriod="ngModel">
+          <option *ngFor="let period of periods" [value]="period">{{period}}</option>
+        </select>
+        <div [hidden]="quotaPeriod.valid || quotaPeriod.pristine" class="alert alert-danger">
+          Quota period is required
+        </div>
+                
+       
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!usagePlanForm.form.valid">Submit</button>
+
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>Confirmation:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9  pull-left">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Description</div>
+      <div class="col-xs-9 pull-left">{{ model.description }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">Throttling Rate</div>
+      <div class="col-xs-9 pull-left">{{ model.throttle.rateLimit }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">Throttling Busrt</div>
+      <div class="col-xs-9 pull-left">{{ model.throttle.burstLimit }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">Quota limit</div>
+      <div class="col-xs-9 pull-left">{{ model.quota.limit }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">Quota Period</div>
+      <div class="col-xs-9 pull-left">{{ model.quota.period }}</div>
+    </div>
+
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>&nbsp;
+    <button class="btn btn-primary" (click)="onConfirm()">Confirm</button>
+  </div>
+</div>
+
+

@@ -1,0 +1,62 @@
+<div class="container">
+  <div [hidden]="submitted">
+    <h2>New Customer Onboarding</h2>
+    <form (ngSubmit)="onSubmit()" #customerForm="ngForm">
+      <div class="form-group">
+        <label for="name">Customer Name</label>
+        <input type="text" class="form-control" id="name"
+               required
+               [(ngModel)]="model.name" name="name"
+               #name="ngModel">
+        <div [hidden]="name.valid || name.pristine"
+             class="alert alert-danger">
+          Name is required
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="appUrl">App URL</label>
+        <input type="text" class="form-control" id="appUrl"
+               [(ngModel)]="model.appUrl" name="appUrl">
+      </div>
+
+      <div class="form-group">
+        <label for="usageplan">Usage Plan</label>
+        <select class="form-control" id="usageplan"
+                required
+                [(ngModel)]="model.usagePlanId" name="usagePlanId"
+                #usageplan="ngModel">
+          <option *ngFor="let plan of usageplans" [value]="plan.id">{{plan.name}}</option>
+        </select>
+        <div [hidden]="usageplan.valid || usageplan.pristine" class="alert alert-danger">
+          Usage plan is required
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-success" [disabled]="!customerForm.form.valid">Submit</button>
+
+    </form>
+  </div>
+
+  <div [hidden]="!submitted">
+    <h2>Confirmation:</h2>
+    <div class="row">
+      <div class="col-xs-3">Name</div>
+      <div class="col-xs-9  pull-left">{{ model.name }}</div>
+    </div>
+    <div class="row">
+      <div class="col-xs-3">App URL</div>
+      <div class="col-xs-9 pull-left">{{ model.appUrl }}</div>
+    </div>
+
+    <div class="row">
+      <div class="col-xs-3">Usage Plan Id</div>
+      <div class="col-xs-9 pull-left">{{ model.usagePlanId }}</div>
+    </div>
+    <br>
+    <button class="btn btn-primary" (click)="submitted=false">Edit</button>
+    <button class="btn btn-primary" (click)="onConfirm()">Confirm</button>
+  </div>
+</div>
+
+

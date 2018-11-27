@@ -1,0 +1,67 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav role="navigation">
+    <mat-nav-list>
+      <a mat-list-item *ngIf="!auth.isAuthenticated()" (click)="auth.login()">
+        <mat-icon class="icon">input</mat-icon>
+        <span class="label">Login</span>
+      </a>
+      <a mat-list-item *ngIf="auth.isAuthenticated()" routerLink="/customers">
+        <mat-icon class="icon">home</mat-icon>
+        <span class="label">Home</span>
+      </a>
+      <a mat-list-item *ngIf="auth.isAuthenticated()" routerLink="/usageplans">
+        <mat-icon class="icon">dashboard</mat-icon>
+        <span class="label">Usage Plans</span>
+      </a>
+      <a mat-list-item *ngIf="auth.isAuthenticated()" (click)="auth.logout()" >
+        <mat-icon class="icon">input</mat-icon>
+        <span class="label">LogOut</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <mat-toolbar color="primary">
+      <div fxHide.gt-xs>
+        <button mat-icon-button (click)="sidenav.toggle()">
+          <mat-icon>menu</mat-icon>
+        </button>
+      </div>
+      <div>
+
+        Message Integration Service
+
+      </div>
+      <div fxFlex fxLayout fxLayoutAlign="flex-end" fxHide.xs>
+        <ul fxLayout fxLayoutGap="20px" class="navigation-items">
+          <!-- <li> -->
+          <a *ngIf="!auth.isAuthenticated()" href="https://testar.auth.us-east-1.amazoncognito.com/login?response_type=token&client_id=7amh5jk3tmdqjju7q5fvmq09ar&redirect_uri=http://localhost:4200/login">
+            <mat-icon class="icon">input</mat-icon>
+            <span class="label">Login</span>
+          </a>
+          <!-- </li> -->
+          <!-- <li> -->
+          <a *ngIf="auth.isAuthenticated()" routerLink="/customers">
+            <mat-icon class="icon">home</mat-icon>
+            <span class="label">Home</span>
+          </a>
+          <!-- </li> -->
+          <!-- <li> -->
+          <a routerLink="/usageplans">
+            <mat-icon class="icon">dashboard</mat-icon>
+            <span class="label">Usage Plans</span>
+          </a>
+          <!-- </li> -->
+          <!-- <li> -->
+          <a *ngIf="auth.isAuthenticated()" (click)="auth.logout()" href="https://testar.auth.us-east-1.amazoncognito.com/logout?response_type=token&client_id=7amh5jk3tmdqjju7q5fvmq09ar&logout_uri=http://localhost:4200/">
+            <mat-icon class="icon">input</mat-icon>
+            <span class="label">Log Out</span>
+          </a>
+          <!-- </li> -->
+        </ul>
+      </div>
+    </mat-toolbar>
+    <main>
+      <router-outlet></router-outlet>
+    </main>
+  </mat-sidenav-content>
+</mat-sidenav-container>

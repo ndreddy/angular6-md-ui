@@ -1,0 +1,57 @@
+<h2>Throttling with Usage Plans </h2>
+
+<!--<app-hero-form></app-hero-form>-->
+<!-- <a routerLink="/usageplans/new">Add new Usage Plan</a> -->
+<button mat-button routerLink="/usageplans/new">Add New</button>
+
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let usageplan of usagePlans; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{usageplan.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+        {{usageplan.description}}
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <mat-form-field>
+      <input matInput placeholder="Rate Limit" id="rateLimit" required [(ngModel)]="usageplan.throttle.rateLimit" name="rateLimit"
+        #rateLimit="ngModel">
+      <div [hidden]="rateLimit.valid || rateLimit.pristine" class="alert alert-danger">
+        Rate Limit is required
+      </div>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Burst Limit" id="burstLimit" required [(ngModel)]="usageplan.throttle.burstLimit" name="burstLimit"
+        #burstLimit="ngModel">
+      <div [hidden]="burstLimit.valid || burstLimit.pristine" class="alert alert-danger">
+        Burst is required
+      </div>
+    </mat-form-field>
+
+    <mat-form-field>
+      <input matInput placeholder="Quota Limit" id="quotaLimit" required [(ngModel)]="usageplan.quota.limit" name="quotaLimit"
+        #quotaLimit="ngModel">
+      <div [hidden]="quotaLimit.valid || quotaLimit.pristine" class="alert alert-danger">
+        Quota Limit is required
+      </div>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-select placeholder="Quota Period" id="quotaPeriod" required [(ngModel)]="usageplan.quota.period" name="quotaPeriod"
+        #quotaPeriod="ngModel">
+        <mat-option *ngFor="let period of periods" [value]="period">{{period}} </mat-option>
+      </mat-select>
+      <div [hidden]="quotaPeriod.valid || quotaPeriod.pristine" class="alert alert-danger">
+        Quota period is required
+      </div>
+    </mat-form-field>
+
+  </mat-expansion-panel>
+
+</mat-accordion>
+
+
+

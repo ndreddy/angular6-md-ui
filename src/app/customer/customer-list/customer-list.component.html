@@ -1,0 +1,74 @@
+<h2>Customer Onboarding </h2>
+
+
+<button mat-button routerLink="/customers/new">Add New</button>
+
+<mat-accordion>
+  <mat-expansion-panel *ngFor="let customer of customers; let i = index">
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        {{customer.name}}
+      </mat-panel-title>
+      <mat-panel-description>
+        API Key: {{customer.apiKey}}
+      </mat-panel-description>
+      <mat-panel-description> </mat-panel-description>
+      <mat-panel-description> </mat-panel-description>
+      <mat-panel-description> </mat-panel-description>
+    </mat-expansion-panel-header>
+
+    <table>
+      <tr>
+
+        <!-- Customer Name -->
+        <td>
+          <mat-form-field>
+            <input matInput placeholder="Customer Name" id="customerName" required [(ngModel)]="customer.name" name="customerName" #customerName="ngModel">
+            <div [hidden]="customerName.valid || customerName.pristine" class="alert alert-danger">
+              Customer Name is required
+            </div>
+          </mat-form-field>
+        </td>
+
+        <!--Usage Plan  -->
+        <td>
+          <mat-form-field>
+            <mat-select placeholder="Usage Plan" id="usagePlan" required [(ngModel)]="customer.usagePlanId" name="usagePlan" #usagePlan="ngModel">
+              <mat-option *ngFor="let usageplan of usageplans" [value]="usageplan.id">{{usageplan.name}} </mat-option>
+            </mat-select>
+            <div [hidden]="usagePlan.valid || usagePlan.pristine" class="alert alert-danger">
+              Usage Plan is required
+            </div>
+          </mat-form-field>
+        </td>
+
+        <!-- App URL -->
+        <td colspan="4">
+          <mat-form-field>
+            <input type="url" matInput placeholder="App URL" id="appUrl" required pattern="https://.*" size="20" [(ngModel)]="customer.appUrl"
+              name="appUrl" #appUrl="ngModel">
+            <div [hidden]="appUrl.valid || appUrl.pristine" class="alert alert-danger">
+              App URL is required
+            </div>
+          </mat-form-field>
+        </td>
+        <td>&nbsp;
+
+
+          <button matTooltip="Update Customer" class="btn btn-success" value="Update" (click)="update(customer)" [disabled]="!(customerName.dirty || usagePlan.dirty || appUrl.dirty)">
+            <mat-icon>done</mat-icon>
+          </button>
+          <button value="Delete" (click)="delete(customer)">
+            <mat-icon>delete</mat-icon>
+          </button>
+          <button value="Reset" (click)="delete()">
+            <mat-icon>refresh</mat-icon>
+          </button>
+
+        </td>
+
+      </tr>
+    </table>
+  </mat-expansion-panel>
+
+</mat-accordion>
